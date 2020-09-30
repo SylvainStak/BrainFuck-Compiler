@@ -29,25 +29,40 @@ class BrainFuck:
             '<': self.decrementPointer,
         }
 
-
+    # +
     def incrementByte(self):
-        self.memory[self.codePosition] += 1
-
+        # (2**self.memoryCellBitSize)-1 --> Max value that can be stored in a cell
+        if(self.memory[self.memoryPosition] < (2**self.memoryCellBitSize)-1):
+            self.memory[self.memoryPosition] += 1
+        else:
+            self.memory[self.memoryPosition] = 0
+    # -
     def decrementByte(self):
-        self.memory[self.codePosition] += 1
-
+        # (2**self.memoryCellBitSize)-1 --> Max value that can be stored in a cell
+        if(self.memory[self.memoryPosition] > 0):
+            self.memory[self.memoryPosition] -= 1
+        else:
+            self.memory[self.memoryPosition] = (2**self.memoryCellBitSize)-1
+    # >
     def incrementPointer(self):
-        self.memoryPosition += 1 if self.memoryPosition < len(self.memory)-1 else -self.memoryPosition
+        if(self.memoryPosition < len(self.memory)-1):
+            self.memoryPosition += 1
+        else:
+            self.memoryPosition = 0
 
+    # <
     def decrementPointer(self):
-        self.memoryPosition -= 1 if self.memoryPosition > 0 else -(len(self.memory)-1)
+        if(self.memoryPosition > 0):
+            self.memoryPosition -= 1
+        else:
+            self.memoryPosition = len(self.memory)-1
 
     def run(self):
         while(self.codePosition < len(self.code)):
             self.do_action[self.code[self.codePosition]]()
             self.codePosition += 1
         
-        print(self.codePosition)
-        print(self.memory)
-        print(self.memoryPosition)
+        print('codePosition --> ' + str(self.codePosition))
+        print('memory --> ' + str(self.memory))
+        print('memoryPosition --> ' + str(self.memoryPosition))
 
