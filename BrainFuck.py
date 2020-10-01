@@ -109,7 +109,7 @@ class BrainFuck:
     # Runs the actual brainfuck code
     def run(self):
         while(self.codePosition < len(self.code)):
-            self.do_action[self.code[self.codePosition]]()
+            self.do_action[self.getActualCodeChar()]()
             self.codePosition += 1
 
         print('------------------------------------')
