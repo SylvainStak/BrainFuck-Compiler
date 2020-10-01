@@ -1,7 +1,7 @@
 class BrainFuck:
     """
     memoryCellBitSize --> Bits that can be stored in a single cell, so it can either be 8, 16 or 32
-        8bits = 255-MAX_VALUE / 16bits = 65536-MAX_VALUE / 32bits = 4294967296-MAX_VALUE
+        8bits = (2^8)-1 --> 255 | 16bits = (2^16)-1 --> 65535 | 32bits = (2^32)-1 --> 4294967295
 
     memoryLength --> Number of cells available to be used, each of the size specified in memoryCellBitSize
     """
