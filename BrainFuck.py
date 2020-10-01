@@ -21,6 +21,9 @@ class BrainFuck:
         # Actual code in brainfuck to compile
         self.code = code
 
+        # Result of the code compilation after the program ends
+        self.compilationResult = ''
+
         # Dictionary that matches each valid character with its function
         self.do_action = {
             '+': self.incrementByte,
@@ -72,10 +75,11 @@ class BrainFuck:
     # .
     def printByte(self):
         char = self.getPointerValue()
-        result = 'BRAINFUCK COMPILER OUTPUT ---> '
+        result = ''
         if(char >= 0 and char <= self.memoryCellBitSize):
             result += chr(char)
-        print(result)
+        self.compilationResult += result
+        print('BRAINFUCK COMPILER OUTPUT ---> ' + result)
 
     # [
     def jumpNext(self):
@@ -117,6 +121,7 @@ class BrainFuck:
         print('------------------------------------')
         print('MEMORY:')
         print(self.memory)
+        return self.compilationResult
         
 if __name__ == '__main__':
     BF = BrainFuck(8,10,'+>++>+++>++++>')
