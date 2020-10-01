@@ -29,20 +29,22 @@ class BrainFuck:
             '<': self.decrementPointer,
             ',': self.readByte,  
             '.': self.printByte,
+            '[': self.jumpNext,
+            ']': self.jumpPrevious,
         }
 
     # +
     def incrementByte(self):
-        if(self.memory[self.memoryPosition] < self.memoryCellBitSize):
-            self.memory[self.memoryPosition] += 1
+        if(self.getPointerValue() < self.memoryCellBitSize):
+            self.updatePointerValue(self.getPointerValue()+1)
         else:
-            self.memory[self.memoryPosition] = 0
+            self.updatePointerValue(0)
     # -
     def decrementByte(self):
-        if(self.memory[self.memoryPosition] > 0):
-            self.memory[self.memoryPosition] -= 1
+        if(self.getPointerValue() > 0):
+            self.updatePointerValue(self.getPointerValue()-1)
         else:
-            self.memory[self.memoryPosition] = self.memoryCellBitSize
+            self.updatePointerValue(self.memoryCellBitSize)
     # >
     def incrementPointer(self):
         if(self.memoryPosition < len(self.memory)-1):
@@ -62,19 +64,48 @@ class BrainFuck:
         char = input('Insert a value (only the first character will be taken in count): ')
         if(len(char) > 0):
             # save the user input as an ascii value
-            self.memory[self.memoryPosition] = ord(char[0])
+            self.updatePointerValue(ord(char[0]))
         else:
             # if the user press enter, then store 13
-            self.memory[self.memoryPosition] = 13
+            self.updatePointerValue(13)
 
     # .
     def printByte(self):
-        char = self.memory[self.memoryPosition]
+        char = self.getPointerValue()
         result = 'BRAINFUCK COMPILER OUTPUT ---> '
         if(char >= 0 and char <= self.memoryCellBitSize):
             result += chr(char)
         print(result)
+
+    # [
+    def jumpNext(self):
+        if(self.getPointerValue() == 0):
+            while(self.getActualCodeChar() != ']'):
+                self.codePosition += 1
+            # jump to the character at the right of matching bracket
+            self.codePosition += 1
+
+
+    # ]
+    def jumpPrevious(self):
+        if(self.getPointerValue() == 0):
+            while(self.getActualCodeChar() != '['):
+                self.codePosition -= 1
+            # jump to the character at the right of matching bracket
+            self.codePosition += 1
+
+    # Set new value to actual pointer
+    def updatePointerValue(self, value):
+        self.memory[self.memoryPosition] = value
     
+    # Get the value from the actual pointer
+    def getPointerValue(self):
+        return self.memory[self.memoryPosition]
+
+    # Get the actual character from the code
+    def getActualCodeChar(self):
+        return self.code[self.codePosition]
+
     # Runs the actual brainfuck code
     def run(self):
         while(self.codePosition < len(self.code)):
@@ -88,6 +119,6 @@ class BrainFuck:
         print(self.memory)
         
 if __name__ == '__main__':
-    BF = BrainFuck(8,10,'>>,.')
+    BF = BrainFuck(8,10,'+>++>+++>++++>')
     BF.run()
 

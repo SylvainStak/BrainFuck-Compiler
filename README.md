@@ -4,5 +4,5 @@ This is a prototype of a brainfuck compiler implemented in python which just use
 
 # TO-DO
 - Add Tests
-- Add jumpNext and jumpPrev functions
+- Add support for nested loops
 - Be able to load custom BrainFuck code from a file
