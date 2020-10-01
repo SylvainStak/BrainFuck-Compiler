@@ -6,3 +6,4 @@ This is a prototype of a brainfuck compiler implemented in python which just use
 - Add Tests
 - Add support for nested loops
 - Be able to load custom BrainFuck code from a file
+- Create a function that generates the hexadecimal version of the memory pointers once the program finished executing
