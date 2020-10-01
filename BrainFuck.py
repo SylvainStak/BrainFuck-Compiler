@@ -5,7 +5,7 @@ class BrainFuck:
 
     memoryLength --> Number of cells available to be used, each of the size specified in memoryCellBitSize
     """
-    def __init__(self, memoryCellBitSize, memoryLength, code):
+    def __init__(self, code, memoryLength=30, memoryCellBitSize=8):
         # Array that stores the memory of the program instance
         self.memory = [0]*memoryLength
 
@@ -23,6 +23,9 @@ class BrainFuck:
 
         # Result of the code compilation after the program ends
         self.compilationResult = ''
+
+        # String only contains valid characters in BrainFuck code
+        self.validCharacters = '+-<>,.[]'
 
         # Dictionary that matches each valid character with its function
         self.do_action = {
@@ -113,7 +116,8 @@ class BrainFuck:
     # Runs the actual brainfuck code
     def run(self):
         while(self.codePosition < len(self.code)):
-            self.do_action[self.getActualCodeChar()]()
+            if(self.getActualCodeChar() in self.validCharacters):
+                self.do_action[self.getActualCodeChar()]()
             self.codePosition += 1
 
         print('------------------------------------')
@@ -124,6 +128,5 @@ class BrainFuck:
         return self.compilationResult
         
 if __name__ == '__main__':
-    BF = BrainFuck(8,10,'+>++>+++>++++>')
+    BF = BrainFuck('+>++>+++>++++>',10,8)
     BF.run()
-

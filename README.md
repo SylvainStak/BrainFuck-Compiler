@@ -20,7 +20,7 @@ $ green test.py
 ```
 
 # TO-DO
-- Add Tests
+- Add more and better tests
 - Add support for nested loops
 - Be able to load custom BrainFuck code from a file
 - Create a function that generates the hexadecimal version of the memory pointers once the program finished executing
