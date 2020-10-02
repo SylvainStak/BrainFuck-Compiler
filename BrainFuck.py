@@ -8,6 +8,9 @@ class BrainFuck:
     def __init__(self, code, memoryLength=30, memoryCellBitSize=8):
         # Array that stores the memory of the program instance
         self.memory = [0]*memoryLength
+        
+        # actual bits of the program memory
+        self.memoryBits = memoryCellBitSize
 
         # Maximum value that can be stored in a cell
         self.memoryCellBitSize = 2**memoryCellBitSize-1
@@ -113,6 +116,27 @@ class BrainFuck:
     def getActualCodeChar(self):
         return self.code[self.codePosition]
 
+    # Shows the actual memory in hex format
+    def showHexMemory(self):
+        maxValueLen = self.memoryCellBitSize
+        for memPointer in range(0,len(self.memory),4):
+            actualLine = ''
+            actualLine += str(memPointer).zfill(self.memoryBits)
+            actualLine += ': '
+
+            for lineValue in range(memPointer, memPointer+4):
+                actualLine += str(self.memory[lineValue]).zfill(4)
+                actualLine += ' '
+
+            for pointsValue in range(memPointer, memPointer+4):                
+                if(self.memory[pointsValue] == 0):
+                    actualLine += '.'
+                else:
+                    actualLine += chr(self.memory[pointsValue])
+                actualLine += ' '
+            print(actualLine)
+            
+
     # Runs the actual brainfuck code
     def run(self):
         while(self.codePosition < len(self.code)):
@@ -124,9 +148,10 @@ class BrainFuck:
         print('PROGRAM EXECUTION ENDED SUCCESSFULLY')
         print('------------------------------------')
         print('MEMORY:')
-        print(self.memory)
+        #print(self.memory)
+        self.showHexMemory()
         return self.compilationResult
         
 if __name__ == '__main__':
-    BF = BrainFuck('+>++>+++>++++>',10,8)
+    BF = BrainFuck('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++',100,8)
     BF.run()
